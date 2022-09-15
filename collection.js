@@ -494,7 +494,7 @@ class jsonCollection {
    * @description Loads the json file to the collection
    * @returns Collection
    */
-  load(path, overwrite = true) {
+  async load(path, overwrite = true) {
     if (!path || !path.endsWith(".json")) throw new Error("The specified path must be of a json file.");
     try {
       path = pt.resolve(path);
