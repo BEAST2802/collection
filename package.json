@@ -1,6 +1,6 @@
 {
   "name": "@beastboyadi/collection",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A much faster Collection package inspired By Discord.js but is made using JSON.",
   "main": "index.js",
   "scripts": {
