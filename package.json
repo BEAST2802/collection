@@ -8,10 +8,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/BeastBoyADI/jsonCollection"
+    "url": "https://github.com/BeastBoyADI/collection"
   },
   "bugs": {
-    "url": "https://github.com/BeastBoyADI/issues"
+    "url": "https://github.com/BeastBoyADI/collection/issues"
   },
   "keywords": [
     "collection",
