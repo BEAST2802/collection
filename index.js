@@ -469,7 +469,7 @@ class jsonCollection {
    * @param {path} [String] - Path to the json file
    * @param {overwrite} [Boolean] - Whether to overwrite the file with new collection entries. Default: true
    * @description Saves the collection in a json file
-   * @return boolean
+   * @returns boolean
    */
   async save(path, overwrite = true) {
     if (!path || !path.endsWith(".json")) throw new Error("The specified must be of a json file.");
