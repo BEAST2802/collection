@@ -1,0 +1,28 @@
+{
+  "name": "@beastboyadi/collection",
+  "version": "1.0.0",
+  "description": "A much faster Collection package inspired By Discord.js but is made using JSON.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Hello!\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BeastBoyADI/jsonCollection"
+  },
+  "bugs": {
+    "url": "https://github.com/BeastBoyADI/issues"
+  },
+  "keywords": [
+    "collection",
+    "discordjs-collection",
+    "json-collection",
+    "jsonCollection"
+  ],
+  "author": "BeastBoyADI",
+  "license": "Apache-2.0",
+  "dependencies": {},
+  "engines": {
+    "node": ">=16.x"
+  }
+}
