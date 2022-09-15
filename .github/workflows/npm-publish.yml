@@ -5,8 +5,13 @@ name: Publish
 
 on:
   workflow_dispatch:
-  release:
-    types: [created]
+    inputs:
+      name:
+        description: 'Username'
+        required: true
+      pass:
+        description: 'Password'
+        required: true
 
 jobs:
   build:
@@ -29,6 +34,9 @@ jobs:
           node-version: 16
           registry-url: https://registry.npmjs.org/
       - run: npm ci
+      - run: npm login
+      - run: ${{github.event.inputs.name}}
+      - run: ${{github.event.inputs.token}}
       - run: npm publish --access=public
         env:
           NODE_AUTH_TOKEN: $NPM_TOKEN
