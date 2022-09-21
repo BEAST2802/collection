@@ -1,7 +1,7 @@
 {
   "name": "@beastboyadi/collection",
-  "version": "1.0.1",
-  "description": "A much faster Collection package inspired By Discord.js but is made using JSON.",
+  "version": "2.0.0",
+  "description": "A better collection package inspired by @discordjs/collection but faster and with two types, JSON and Map.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Hello!\""
@@ -17,7 +17,9 @@
     "collection",
     "discordjs-collection",
     "json-collection",
-    "jsonCollection"
+    "jsonCollection",
+    "mapCollection",
+    "map-collection"
   ],
   "author": "BeastBoyADI",
   "license": "Apache-2.0",
