@@ -3,7 +3,6 @@
 [![Discord Server](https://img.shields.io/discord/888465044868833331?color=5865F2&logo=discord&logoColor=white)](https://discord.gg/bX6AT65PmP)
 [![NPM version](https://img.shields.io/npm/v/@beastboyadi/collection.svg?maxAge=3600)](https://www.npmjs.com/package/@beastboyadi/collection)
 [![NPM downloads](https://img.shields.io/npm/dt/@beastboyadi/collection.svg?maxAge=3600)](https://www.npmjs.com/package/@beastboyadi/collection)
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?maxAge=3600)](https://github.com/feross/standard)
 [![LICENSE](https://img.shields.io/github/license/BeastBoyADI/collection.svg?maxAge=3600)](LICENSE)
 
 [![npm package](https://nodei.co/npm/@beastboyadi/collection.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/@beastboyadi/collection/)
