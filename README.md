@@ -1,5 +1,6 @@
 # Collection
 [![NPM Package](https://github.com/BeastBoyADI/collection/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/BeastBoyADI/collection/actions)
+[![NPM Package](https://github.com/BeastBoyADI/collection/actions/workflows/npm-github-packages.yml/badge.svg)](https://github.com/BeastBoyADI/collection/actions)
 [![Discord Server](https://img.shields.io/discord/888465044868833331?color=5865F2&logo=discord&logoColor=white)](https://discord.gg/bX6AT65PmP)
 [![NPM version](https://img.shields.io/npm/v/@beastboyadi/collection.svg?maxAge=3600)](https://www.npmjs.com/package/@beastboyadi/collection)
 [![NPM downloads](https://img.shields.io/npm/dt/@beastboyadi/collection.svg?maxAge=3600)](https://www.npmjs.com/package/@beastboyadi/collection)
