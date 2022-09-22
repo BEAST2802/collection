@@ -20,7 +20,7 @@ class mapCollection extends Map {
       return;
     }
     let entries = [];
-    if (typeof data !== object) {
+    if (typeof data !== "object") {
       super();
       return;
     }
