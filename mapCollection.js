@@ -627,7 +627,7 @@ class mapCollection extends Map {
    * @returns Collection
    */
   clone() {
-    let cloned = this.create(this.json);
+    let cloned = this.create(this);
     return cloned;
   }
 

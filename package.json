@@ -1,6 +1,6 @@
 {
   "name": "@beastboyadi/collection",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A better collection package inspired by @discordjs/collection but faster and with two types, JSON and Map.",
   "main": "index.js",
   "scripts": {
