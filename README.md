@@ -1,10 +1,12 @@
 # Collection
-[![NPM Package](https://github.com/BeastBoyADI/collection/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/BeastBoyADI/collection/actions)
-[![NPM Package](https://github.com/BeastBoyADI/collection/actions/workflows/npm-github-packages.yml/badge.svg)](https://github.com/BeastBoyADI/collection/actions)
-[![Discord Server](https://img.shields.io/discord/888465044868833331?color=5865F2&logo=discord&logoColor=white)](https://discord.gg/bX6AT65PmP)
-[![NPM version](https://img.shields.io/npm/v/@beastboyadi/collection.svg?maxAge=3600)](https://www.npmjs.com/package/@beastboyadi/collection)
-[![NPM downloads](https://img.shields.io/npm/dt/@beastboyadi/collection.svg?maxAge=3600)](https://www.npmjs.com/package/@beastboyadi/collection)
-[![LICENSE](https://img.shields.io/github/license/BeastBoyADI/collection.svg?maxAge=3600)](LICENSE)
+[![NPM Package](https://img.shields.io/github/workflow/status/BeastBoyADI/collection/Node.js%20Package?label=Node.js%20Package&logo=npm&style=plastic)](https://github.com/BeastBoyADI/collection/actions)
+[![NPM Package](https://img.shields.io/github/workflow/status/BeastBoyADI/collection/Node.js%20Package%20(Github)?label=Node.js%20Package%20%28Github%29&logo=github&style=plastic)](https://github.com/BeastBoyADI/collection/actions)
+[![Discord Server](https://img.shields.io/discord/888465044868833331?color=5865F2&logo=discord&label=Discord&logoColor=white&style=plastic)](https://discord.gg/bX6AT65PmP)
+[![NPM version](https://img.shields.io/npm/v/@beastboyadi/collection.svg?maxAge=3600&logo=npm&label=Version&style=plastic)](https://www.npmjs.com/package/@beastboyadi/collection)
+![node-current](https://img.shields.io/node/v/@beastboyadi/collection?label=Version&logo=node.js&style=plastic)
+[![NPM downloads](https://img.shields.io/npm/dt/@beastboyadi/collection.svg?maxAge=3600&logo=npm&label=Downloads&style=plastic)](https://www.npmjs.com/package/@beastboyadi/collection)
+![Visitors](https://shields-io-visitor-counter.herokuapp.com/badge?page=BeastBoyADI.collection&label=Visitors&labelColor=000000&logo=GitHub&logoColor=FFFFFF&color=1D70B8&style=plastic)
+[![LICENSE](https://img.shields.io/github/license/BeastBoyADI/collection.svg?maxAge=3600&label=License&labelColor=000000&style=plastic)](LICENSE)
 
 [![npm package](https://nodei.co/npm/@beastboyadi/collection.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/@beastboyadi/collection/)
 

@@ -29,6 +29,13 @@ class jsonCollection {
         if (typeof k !== "symbol" && typeof k !== "string") k = inspect(k);
         this.json[k] = v;
       }
+    } else if (Array.isArray(data) && data.every(m => m && typeof m === "object")) {
+      for (let d of data) {
+        let en = Object.entries(d);
+        for (let [k, v] of en) {
+          if (k !== null && typeof k !== "undefined") this.json[k] = v;
+        }
+      }
     }
   }
 
@@ -138,36 +145,36 @@ class jsonCollection {
     if (!this.size) return [];
     return this.keys.map(fn);
   }
-  
+
   /**
    * @param {fn: function(Collection: this)} - The function to run on the collection
    * @description Runs the specified function on the collection
    * @returns Collection
    */
-   tap(fn) {
-     if (typeof fn !== "function") throw new TypeError(`${fn} is not a function.`);
-     fn(this);
-     return this;
-   }
-   
-   /**
-    * @param {fn: (Value: v, Key, k, Collection: this)} - The function. Must return a boolean.
-    * @description Splits the collection into an Array of two collection. First collection that passed the function and the other that didn't pass the the function
-    * @return Array of Collections
-    * @example Collection.split((v, k) => { return (typeof v === "string" && typeof k === "string") })
-    */
-    split(fn) {
-      if (typeof fn !== "function") throw new TypeError(`${fn} is not a function`);
-      let cols = [this.create(), this.create()];
-      for (let [k, v] of this) {
-        if (fn(v, k, this)) {
-          cols[0].set(k, v);
-        } else {
-          cols[1].set(k, v);
-        }
+  tap(fn) {
+    if (typeof fn !== "function") throw new TypeError(`${fn} is not a function.`);
+    fn(this);
+    return this;
+  }
+
+  /**
+   * @param {fn: (Value: v, Key, k, Collection: this)} - The function. Must return a boolean.
+   * @description Splits the collection into an Array of two collection. First collection that passed the function and the other that didn't pass the the function
+   * @return Array of Collections
+   * @example Collection.split((v, k) => { return (typeof v === "string" && typeof k === "string") })
+   */
+  split(fn) {
+    if (typeof fn !== "function") throw new TypeError(`${fn} is not a function`);
+    let cols = [this.create(), this.create()];
+    for (let [k, v] of this) {
+      if (fn(v, k, this)) {
+        cols[0].set(k, v);
+      } else {
+        cols[1].set(k, v);
       }
-      return cols;
     }
+    return cols;
+  }
 
   /**
    * @param {fn: function(Value: v, Key: k)} - The function for satisying the test on all entries. Must return boolean
