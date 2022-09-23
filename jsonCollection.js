@@ -1,7 +1,7 @@
 const customInspectSymbol = Symbol.for('nodejs.util.inspect.custom');
-const fs = require("fs/promises");
-const pt = require("path");
-const { inspect } = require("util");
+const fs = require("node:fs/promises");
+const pt = require("node:path");
+const { inspect } = require("node:util");
 
 class jsonCollection {
 
@@ -672,7 +672,7 @@ class jsonCollection {
   async save(path, overwrite = true) {
     if (typeof path !== "string") throw new TypeError("Path must be a non-empty string.");
     if (!path.endsWith(".json")) throw new Error("The specified path must be of a json file.");
-    if (!path.startsWith(process.cwd())) path = process.cwd() + path;
+    if (!path.startsWith(process.cwd())) path = process.cwd() + `${path.startsWith("/") ? `/${path}` : path}`;
     let err;
     let res;
     if (!overwrite) {
@@ -699,7 +699,7 @@ class jsonCollection {
   async load(path, overwrite = true) {
     if (typeof path !== "string") throw new TypeError("Path must be a non-empty string.");
     if (!path.endsWith(".json")) throw new Error("The specified path must be of a json file.");
-    if (!path.startsWith(process.cwd())) path = process.cwd() + path;
+    if (!path.startsWith(process.cwd())) path = process.cwd() + `${path.startsWith("/") ? `/${path}` : path}`;
     let err;
     let data = await fs.readFile(path, { encoding: "utf8" }).catch(e => {
       err = e;
