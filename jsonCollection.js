@@ -3,15 +3,23 @@ const fs = require("node:fs/promises");
 const pt = require("node:path");
 const { inspect } = require("node:util");
 
+/**
+ * @class
+ * @namespace jsonCollection
+ * @classdesc A collection class which uses JSON for storing datas
+ * @constructs jsonCollection
+ * @param {(Object|jsonCollection|mapCollection|Array)} data - The data to add to the collection while constructing the collection
+ * @returns {jsonCollection} - The constructed collection
+ * @example
+ * let json = new jsonCollection({"hii": "hello", "ok": "bye"})
+ * @example
+ * let json = new jsonCollection([["hii", "hello"], ["ok", "bye"]])
+ * @example
+ * let json = new jsonCollection(jsonCollection2)
+ * @example
+ * let json = new jsonCollection(mapCollection)
+ */
 class jsonCollection {
-
-  /**
-   * Adds the extra datas at the initiation
-   * @param {data: Object - {key: value} |Map - new Map() |jsonCollection - new jsonCollection() |mapCollection - new mapCollection() |Array - [[key, value], [key, value]]
-   * @returns Collection
-   * @example new jsonCollection({"hii": "hello", "ok": "bye"})
-   * @example new jsonCollection([["hii", "hello"], ["ok", "bye"]])
-   */
   constructor(data) {
     this.json = {};
     if (!data) return;
@@ -40,11 +48,12 @@ class jsonCollection {
   }
 
   /**
-   * @param {key: String|Object|Number|Symbol} - The collection key for setting a value to it
-   * @param {value: Any} - The collection value you want to set
+   * @param {jsonKey} key - The collection key for setting a value to it
+   * @param {jsonValue} value - The collection value you want to set
    * @description Adds an entry to the collection with the specified key and value
-   * @returns Collection
-   * @example Collection.set("hii", "hello")
+   * @returns {jsonCollection}
+   * @example
+   * jsonCollection.set("hii", "hello") //returns jsonCollection
    */
   set(key, value) {
     let k = key;
@@ -55,10 +64,11 @@ class jsonCollection {
   }
 
   /**
-   * @param {key: String|Object|Number|Symbol} - The collection key to get a value attached to it
+   * @param {jsonKey} key - The collection key to get a value attached to it
    * @description Returns the value of the key in the collection
-   * @returns Collection
-   * @example Collection.get("hii")
+   * @returns {jsonCollection}
+   * @example 
+   * jsonCollection.get("hii") //returns {jsonCollection}
    */
   get(key) {
     let k = key;
@@ -69,10 +79,11 @@ class jsonCollection {
   };
 
   /**
-   * @param {fn : function(Value: v, Key: k, Collection: this)} - The function to find the values. Must return boolean
+   * @param {jsonCollection~3P} fn - The function to find the values. Must return boolean
    * @description Finds the value with the specified function
-   * @returns Value returned by the function
-   * @example Collection.find(v => v.includes("hii"))
+   * @returns {jsonValue} value
+   * @example
+   * jsonCollection.find(v => v.includes("hii")) //returns {Value}
    */
   find(fn) {
     if (typeof fn !== "function") throw new TypeError(`${fn} is not a function.`);
@@ -80,21 +91,23 @@ class jsonCollection {
   }
 
   /**
-   * @param {fn : function(Value: v, Key: k, Collection: this)} - The function to find the keys. Must return boolean
+   * @param {jsonCollection~3P} fn - The function to find the keys. Must return boolean
    * @description Finds the key in the collection with the specified function
-   * @returns Key returned by the function
-   * @example Collection.findKey(v => v.includes("hii"))
+   * @returns {jsonKey} key
+   * @example
+   * Collection.findKey(v => v.includes("hii"))
    */
   findKey(fn) {
     if (typeof fn !== "function") throw new TypeError(`${fn} is not a function.`);
-    return filterKeys(fn)[0];
+    return this.filterKeys(fn)[0];
   }
 
   /**
-   * @param {fn : function(Value: v, Key: k, Collection: this)} - The function to filter the keys. Must return boolean
+   * @param {jsonCollection~3P} fn - The function to filter the keys. Must return boolean
    * @description Filters the keys in the collection with the specified function
-   * @returns Array of Keys returned by the function
-   * @example Collection.filterKeys(v => v.includes("hii"))
+   * @returns {jsonKeys[]} - Array of keys
+   * @example
+   * Collection.filterKeys(v => v.includes("hii"))
    */
   filterKeys(fn) {
     if (typeof fn !== "function") throw new TypeError(`${fn} is not a function.`);
@@ -107,10 +120,11 @@ class jsonCollection {
   }
 
   /**
-   * @param {fn : function(Value: v, Key: k, Collection: this)} - The function to filter the entries of the collection. Must return boolean.
+   * @param {jsonCollection~3P} fn - The function to filter the entries of the collection. Must return boolean.
    * @description Filters out the collection entries
-   * @returns Filtered Collection
-   * @example Collection.filter(v => v.includes("hii"))
+   * @returns {jsonCollection} - Filtered Collection
+   * @example
+   * Collection.filter(v => v.includes("hii"))
    */
   filter(fn) {
     if (typeof fn !== "function") throw new TypeError(`${fn} is not a function.`);
@@ -123,10 +137,11 @@ class jsonCollection {
   }
 
   /**
-   * @param {fn : function(Value: v)} - The function for mapping the collection
+   * @param {jsonCollection~VP} fn - The function for mapping the collection
    * @description Formats the collection
-   * @returns Array of values in the function format
-   * @example Collection.map(v => `Value: ${v}`)
+   * @returns {jsonValue[]} - Array of Mapped values
+   * @example
+   * Collection.map(v => `Value: ${v}`)
    */
   map(fn) {
     if (typeof fn !== "function") return this;
@@ -135,10 +150,11 @@ class jsonCollection {
   }
 
   /**
-   * @param {fn : function(Key: k)} - The function for mapping the collection
+   * @param {jsonCollection~KP} fn - The function for mapping the collection
    * @description Formats the collection keys
-   * @returns Array of keys in the function format
-   * @example Collection.map(k => `Key: ${k}`)
+   * @returns {jsonKey[]} - Array of Mapped keys
+   * @example
+   * jsonCollection.map(k => `Key: ${k}`)
    */
   mapKeys(fn) {
     if (typeof fn !== "function") return this;
@@ -147,9 +163,13 @@ class jsonCollection {
   }
 
   /**
-   * @param {fn: function(Collection: this)} - The function to run on the collection
+   * @param {jsonCollection~CP} fn - The function to run on the collection
    * @description Runs the specified function on the collection
-   * @returns Collection
+   * @returns {jsonCollection} - The Collection
+   * @example
+   * jsonCollection.tap((col) => {
+   * console.log(col.get("hii"));
+   * }).toJSON();
    */
   tap(fn) {
     if (typeof fn !== "function") throw new TypeError(`${fn} is not a function.`);
@@ -158,10 +178,11 @@ class jsonCollection {
   }
 
   /**
-   * @param {fn: (Value: v, Key, k, Collection: this)} - The function. Must return a boolean.
+   * @param {jsonCollection~3P} fn - The function. Must return a boolean.
    * @description Splits the collection into an Array of two collection. First collection that passed the function and the other that didn't pass the the function
-   * @return Array of Collections
-   * @example Collection.split((v, k) => { return (typeof v === "string" && typeof k === "string") })
+   * @return {jsonCollection[]} - Array of Collections
+   * @example
+   * jsonCollection.split((v, k) => { return (typeof v === "string" && typeof k === "string") })
    */
   split(fn) {
     if (typeof fn !== "function") throw new TypeError(`${fn} is not a function`);
@@ -177,10 +198,11 @@ class jsonCollection {
   }
 
   /**
-   * @param {fn: function(Value: v, Key: k)} - The function for satisying the test on all entries. Must return boolean
+   * @param {jsonCollection~2P} fn - The function for satisying the test on all entries. Must return boolean
    * @description Performs a test on all entries of the collection
-   * @returns boolean
-   * @example Collection.every((k,v) => { return (k.startsWith("server") && typeof v !== "undefined") })
+   * @returns {boolean}
+   * @example
+   * jsonCollection.every((k,v) => { return (k.startsWith("server") && typeof v !== "undefined") })
    */
   every(fn) {
     if (typeof fn !== "function") return false;
@@ -192,20 +214,22 @@ class jsonCollection {
   }
 
   /**
-   * @param {fn: function(Value: v)} - Function for running on the values
+   * @param {jsonCollection~VP} fn - Function for running on the values
    * @description Performs a forEach function on the values of the collection
-   * @returns Value returned from the function or undefined
-   * @example Collection.each(v => { Array.push(v)})
+   * @returns {?jsonValue} - Value returned from the function or undefined
+   * @example
+   * jsonCollection.each(v => { Array.push(v)})
    */
   each(fn) {
     return this.forEach(fn);
   }
 
   /**
-   * @param {fn: function(Value: v)} - Function for running on the values
+   * @param {jsonCollection~VP} fn - Function for running on the values
    * @description Performs a forEach function on the values of the collection
-   * @returns Value return from the function or undefined
-   * @example Collection.each(v => { Array.push(v)})
+   * @returns {?jsonValue} - Value return from the function or undefined
+   * @example
+   * jsonCollection.each(v => { Array.push(v)})
    */
   forEach(fn) {
     if (typeof fn !== "function") return null;
@@ -213,10 +237,11 @@ class jsonCollection {
   }
 
   /**
-   * @param {collection} - jsonCollection to compare with the current collection
-   * @description Compares both jsonCollection and return true if they are equal
-   * @returns boolean
-   * @example Collection.equal(jsonCollection)
+   * @param {jsonCollection} collection - Collection to compare with the current collection
+   * @description Compares both jsonCollection and returns true if they are equal
+   * @returns {boolean}
+   * @example
+   * jsonCollection.equal(jsonCollection2)
    */
   equal(collection) {
     if (!collection) return false;
@@ -232,10 +257,11 @@ class jsonCollection {
   }
 
   /**
-   * @param {fn: function(Value: v, Key: k)} - The function for testing the entries on the collection. Must return boolean
+   * @param {jsonCollection~2P} fn - The function for testing the entries on the collection. Must return boolean
    * @description Performs a test on all entries of the Collection and returns true if anyone of them is true
-   * @returns boolean
-   * @example Collection.some((v,k) => v !== k)
+   * @returns {boolean}
+   * @example 
+   * jsonCollection.some((v,k) => v !== k)
    */
   some(fn) {
     if (typeof fn !== "function") return false;
@@ -247,11 +273,12 @@ class jsonCollection {
   }
 
   /**
-   * @param {fn: function(previousValue: v1, currentValue: v2, currentIndex?: Number, array: [])} - The reduce function same as Array.reduce
-   * @param {initialValue?: v} - The initial value to use as the previous value for initialising the reduce function
-   * @description Reduces the values of the collection same as Array.reduce with same parameters
-   * @returns Reduced value
-   * @example Collection.reduce((v1, v2) => { return v1 + v2 }, v3)
+   * @param {function} fn - The reduce function same as {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce|Array.reduce} parameters
+   * @param {jsonValue} initialValue - The initial value to use as the previous value for initialising the reduce function
+   * @description Reduces the values of the collection same as {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce|Array.reduce} with same parameters
+   * @returns {jsonValue} - Reduced value
+   * @example
+   * jsonCollection.reduce((v1, v2) => { return v1 + v2 }, v3)
    */
   reduce(fn, initialValue) {
     if (typeof fn !== "function") return null;
@@ -259,11 +286,12 @@ class jsonCollection {
   }
 
   /**
-   * @param {fn: function(previousKey: k1, currentKey: k2, currentIndex?: Number, array: [])} - The reduce function same as Array.reduce
-   * @param {initialKey?: k} - The initial key to use as the previous key for initialising the reduce function
-   * @description Reduces the keys of the collection same as Array.reduce with same parameters
-   * @returns Reduced key
-   * @example Collection.reduceKey((k1, k2) => { return k1 + k2 }, k3)
+   * @param {function} fn - The reduce function same as {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce|Array.reduce} parameters
+   * @param {jsonKey} initialKey - The initial key to use as the previous key for initialising the reduce function
+   * @description Reduces the keys of the collection same as {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce|Array.reduce} with same parameters
+   * @returns {jsonKey} - Reduced key
+   * @example
+   * jsonCollection.reduceKey((k1, k2) => { return k1 + k2 }, k3)
    */
   reduceKey(fn, initialKey) {
     if (typeof fn !== "function") return null;
@@ -271,10 +299,11 @@ class jsonCollection {
   }
 
   /**
-   * @param {fn?: function(previousValue: v, currentValue: v1)} - The function to sort the values. Must return boolean
-   * @description Sorts the values of the collection without affecting it. Same as Array.sort
-   * @returns Sorted Array of values
-   * @example Collection.sort((v, v1) => v1 > v)
+   * @param {function} fn - The function to sort the values same as {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort|Array.sort} parameters. Must return {boolean}
+   * @description Sorts the values of the collection without affecting it. Same as {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort|Array.sort}
+   * @returns {jsonValue[]} - Sorted Array of values
+   * @example
+   * jsonCollection.sort((v, v1) => v1 > v)
    */
   sort(fn) {
     let val = this.values;
@@ -282,10 +311,11 @@ class jsonCollection {
   }
 
   /**
-   * @param {fn?: function(previousKey: k, currentKey: k1)} - The function to sort the keys. Must return boolean
-   * @description Sorts the keys of the collection without affecting it. Same as Array.sort
-   * @returns Sorted Array of keys
-   * @example Collection.sortKeys((k, k1) => k1 < k)
+   * @param {function} fn - The function to sort the keys same as {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort|Array.sort} parameters. Must return {boolean}
+   * @description Sorts the keys of the collection without affecting it. Same as  {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort|Array.sort}
+   * @returns {jsonKey[]} - Sorted Array of keys
+   * @example
+   * jsonCollection.sortKeys((k, k1) => k1 < k)
    */
   sortKeys(fn) {
     let key = this.keys;
@@ -293,10 +323,14 @@ class jsonCollection {
   }
 
   /**
-   * @param {startIndex?: Number, endIndex?: Number} [Optional] - The starting and ending Index for randomising the value
+   * @param {number} [startIndex=0] - The starting index for randomising the value
+   * @param {number} [endIndex=1] - The ending index for randomising the value
    * @description Randomises between the entries of collection and returns the random value
-   * @returns Random value
-   * @example Collection.random()
+   * @returns {jsonValue} - Random value
+   * @example
+   * jsonCollection.random();
+   * @example
+   * jsonCollection.random(2, 6);
    */
   random(startIndex, endIndex) {
     return this.get(this.randomKey(startIndex, endIndex));
@@ -304,53 +338,72 @@ class jsonCollection {
 
   /**
    * @description Converts the collection into a json
-   * @returns The JSON
-   * @example Collection.toJSON()
+   * @returns {string} - The Stringified JSON Object
+   * @example 
+   * jsonCollection.toJSON()
    */
   toJSON() {
     return JSON.stringify(this.json);
   }
 
   /**
-   * @param {keys?: Array} - Array of keys
+   * @param {...jsonKey} keys - Array of keys
    * @description Checks if all keys are present in the collection
-   * @returns boolean
+   * @returns {boolean}
+   * @example
+   * // returns false
+   * jsonCollection.hasAll("hii", "hello", "lol");
+   * @example
+   * // returns true
+   * jsonCollection.hasAll(["hii", "ok"])
    */
   hasAll(...keys) {
     return keys.every(x => this.has(x));
   }
 
   /**
-   * @param {keys?: Array} - Array of keys
+   * @param {...jsonKey} keys - Array of keys
    * @description Checks if any of the keys are present in the collection
-   * @returns boolean
+   * @returns {boolean}
+   * @example
+   * //returns true
+   * jsonCollection.hasAny("ok", "bye", "hii")
    */
   hasAny(...keys) {
     return keys.some(x => this.has(x));
   }
 
   /**
-   * @param {values?: Array} - Array of Values
+   * @param {...jsonValue} values - Array of Values
    * @description Checks if all values are present in the collection
-   * @returns boolean
+   * @returns {boolean}
+   * @example
+   * //returns true
+   * jsonCollection.hasAllValues("ye", "hii")
    */
   hasAllValues(...values) {
     return values.every(x => this.hasValue(x));
   }
 
   /**
-   * @param {values?: Array} - Array of values
+   * @param {...jsonValue} values - Array of values
    * @description Checks if any of the values are in the collection
-   * @returns boolean
+   * @returns {boolean}
+   * @example
+   * //returns false
+   * jsonCollection.hasAnyValue("lol", "no")
    */
   hasAnyValue(...values) {
     return values.some(x => this.hasValue(x));
   }
 
   /**
-   * @param {value?: Any} - The value
+   * @param {jsonValue} value - The value
    * @description Checks if the value is in the collection
-   * @returns boolean
+   * @returns {boolean}
+   * @example
+   * //returns false
+   * jsonCollection.hasValue("yes")
    */
   hasValue(value) {
     if (!this.size) return false;
@@ -358,9 +411,12 @@ class jsonCollection {
   }
 
   /**
-   * @param {key?: String|Object|Number|Symbol} - The key
+   * @param {jsonKey} key - The key
    * @description Checks if the key is present in the collection
-   * @returns boolean;
+   * @returns {boolean}
+   * @example
+   * //returns true
+   * jsonCollection.has("hii")
    */
   has(key) {
     if (!this.size) return false;
@@ -372,9 +428,11 @@ class jsonCollection {
   }
 
   /**
-   * @param {index?: Number} - The index till which the keys will be retrieved from the first. Default 1
+   * @param {number} [index=1] - The index till which the keys will be retrieved from the first. Default 1
    * @description To get the first key or an Array of keys from the first
-   * @returns The First key or an Array of keys from the first
+   * @returns {(jsonKey|jsonKey[])} - The First key or an Array of keys from the first
+   * @example
+   * jsonCollection.firstKey()
    */
   firstKey(index) {
     if (!this.size) return null;
@@ -387,9 +445,11 @@ class jsonCollection {
   }
 
   /**
-   * @param {index?: Number} - The index till which the keys will be retrieved from the last. Default 1
+   * @param {number} [index=1] - The index till which the keys will be retrieved from the last. Default 1
    * @description To get the last key or an Array of keys from the last
-   * @returns The Last key or an Array of keys from the last
+   * @returns {(jsonKey|jsonKey[])} - The Last key or an Array of keys from the last
+   * @example
+   * jsonCollection.lastKey()
    */
   lastKey(index) {
     if (!this.size) return null;
@@ -403,9 +463,9 @@ class jsonCollection {
   }
 
   /**
-   * @param {index?: Number} - The index number
+   * @param {number} index - The index number
    * @description To get the value at that index number
-   * @returns value at the index
+   * @returns {jsonValue} - Value at the index
    */
   at(index) {
     if (!this.size) return null;
@@ -413,9 +473,9 @@ class jsonCollection {
   }
 
   /**
-   * @param {index?: Number} - The index number
+   * @param {number} index - The index number
    * @description To get the key at that index number
-   * @returns key at the index
+   * @returns {jsonKey} - Key at the index
    */
   keyAt(index) {
     if (!this.size) return null;
@@ -423,9 +483,14 @@ class jsonCollection {
   }
 
   /**
-   * @param {startIndex?: Number, endIndex?: Number} - The starting and ending index number
-   * @description - To get a random key
-   * @returns Random Key
+   * @param {number} [startIndex=0] - The starting index for randomising the key
+   * @param {number} [endIndex=1] - The ending index for randomising the key
+   * @description Randomises between the entries of collection and returns the random key
+   * @returns {jsonKey} - Random key
+   * @example
+   * jsonCollection.randomKey();
+   * @example
+   * jsonCollection.randomKey(2, 6);
    */
   randomKey(startIndex, endIndex) {
     if (!this.size) return null;
@@ -443,7 +508,9 @@ class jsonCollection {
 
   /**
    * @description Reverses the keys and values of the collection without affecting the original collection
-   * @returns Collection
+   * @returns {jsonCollection} - The collection
+   * @example
+   * jsonCollection.reverse()
    */
   reverse() {
     let entries = this.entries.reverse();
@@ -452,7 +519,9 @@ class jsonCollection {
 
   /**
    * @description Reverses the values of the collection without affecting the original collection
-   * @returns Array
+   * @returns {jsonValue[]} - Array of reversed values
+   * @example
+   * jsonCollection.reverseValues()
    */
   reverseValues() {
     return this.values.reverse();
@@ -460,19 +529,23 @@ class jsonCollection {
 
   /**
    * @description Reverses the keys of the collection without affecting the origin collection
-   * @returns Array
+   * @returns {jsonKey[]} - Array of reversed keys
+   * @example
+   * jsonCollection.reverseKeys()
    */
   reverseKeys() {
     return this.keys.reverse();
   }
 
-  /** @param {index?: Number} - The index till which the values will be retrieved from first. Default 1
+  /** @param {number} [index=1] - The index till which the values will be retrieved from first. Default 1
    * @description To get the first value or an Array of values from the first
-   * @returns The First value or an Array of values from the first
+   * @returns {jsonValue|jsonValue[]} - The First value or an Array of values from the first
+   * @example
+   * jsonCollection.first()
    */
   first(index) {
     let keys = this.firstKey(index);
-    if (!key) return null;
+    if (!keys) return null;
     if (!Array.isArray(keys)) {
       return this.get(keys);
     } else {
@@ -484,9 +557,11 @@ class jsonCollection {
     }
   }
 
-  /** @param {index?: Number} - The index till which the values will be retrieved from last. Default 1
+  /** @param {number} [index=1] - The index till which the values will be retrieved from last. Default 1
    * @description To get the last value or an Array of values from the last
-   * @returns The Last Value or an Array of values from the last
+   * @returns {jsonValue|jsonValue[]} - The Last Value or an Array of values from the last
+   * @example
+   * jsonCollection.last()
    */
   last(index) {
     let keys = this.lastKey(index);
@@ -504,7 +579,9 @@ class jsonCollection {
 
   /**
    * @description Converts the collection to an array of values
-   * @returns Array
+   * @returns {jsonValue[]} - Array of values
+   * @example
+   * jsonCollection.array()
    */
   array() {
     return this.values;
@@ -512,17 +589,21 @@ class jsonCollection {
 
   /**
    * @description Converts the collection to an array of keys
-   * @returns Array
+   * @returns {jsonKey[]} - Array of keys
+   * @example
+   * jsonCollection.keysArray()
    */
   keysArray() {
     return this.keys;
   }
 
   /**
-   * @param {start?: Number} - Starting index
-   * @param {end?: Number} - Ending index
-   * @description Slices the collection according to the indexes and generates a new collection
-   * @returns Collection
+   * @param {number} [start=0] - Starting index
+   * @param {number} [end=1] - Ending index
+   * @description Slices the collection according to the indexes and generates a new collection. Same as {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice|Array.slice}
+   * @returns {jsonCollection} - The Collection
+   * @example
+   * jsonCollection.slice(1, 5)
    */
   slice(start = 0, end = 1) {
     let entries = this.entries.slice(start, end);
@@ -530,9 +611,11 @@ class jsonCollection {
   }
 
   /**
-   * @param {key: String|Object|Number|Symbol} - The key from the collection
+   * @param {jsonKey} key - The key from the collection
    * @description Deletes the entry with the specified key from the collection
-   * @returns Collection
+   * @returns {jsonCollection} - The collection
+   * @example
+   * jsonCollection.delete("hii")
    */
   delete(key) {
     let k = key;
@@ -544,9 +627,11 @@ class jsonCollection {
   }
 
   /**
-   * @param {index: Number} - The index of the entry to delete
+   * @param {number} index - The index of the entry to delete
    * @description Deletes the entry at the specified index number. Index should be same like in Array starting from 0
-   * @returns Collection
+   * @returns {jsonCollection} - The Collection
+   * @example
+   * jsonCollection.deleteAt(3)
    */
   deleteAt(index) {
     let key = this.keyAt(index);
@@ -555,9 +640,11 @@ class jsonCollection {
   }
 
   /**
-   * @param {index?: Number} - The index till which the entries will be deleted from the first. Default 1
+   * @param {number} [index=1] - The index till which the entries will be deleted from the first.
    * @description Deletes the first entry or an Array of entries from the first of the collection
-   * @returns Collection
+   * @returns {?jsonCollection} - The Collection
+   * @example
+   * jsonCollection.deleteFirst(10)
    */
   deleteFirst(index) {
     let keys = this.firstKey(index);
@@ -572,15 +659,17 @@ class jsonCollection {
     return this;
   }
 
-  /** @param {index?: Number} - The index till which entries will be deleted from the last
+  /** @param {number} [index=1] - The index till which entries will be deleted from the last
    * @description Deletes the last entry or an Array of entries from the last of the collection
-   * @returns Collection
+   * @returns {?jsonCollection} - The Collection
+   * @example
+   * jsonCollection.deleteLast(3)
    */
   deleteLast(index) {
     let keys = this.lastKey(index);
     if (!keys) return null;
     if (!Array.isArray(keys)) {
-      this.delete(key);
+      this.delete(keys);
     } else {
       for (let k of keys) {
         this.delete(k);
@@ -590,10 +679,12 @@ class jsonCollection {
   }
 
   /**
-   * @param {start?: Number} - The range starting number
-   * @param {end?: Number} - The range ending number
+   * @param {number} [start=0] - The range starting number
+   * @param {number} [end=1] - The range ending number
    * @description Deletes all entries within the specified range
-   * @returns Collection
+   * @returns {jsonCollection} - The Collection
+   * @example
+   * jsonCollection.deleteRange(2, 7)
    */
   deleteRange(start = 0, end = 1) {
     let keys = this.keys.slice(start, end);
@@ -604,8 +695,10 @@ class jsonCollection {
   }
 
   /**
-   * @description Clears the collection
-   * @returns boolean
+   * @description Clears the entire collection
+   * @returns {boolean}
+   * @example
+   * jsonCollection.clear();
    */
   clear() {
     this.sweep(() => true);
@@ -613,9 +706,11 @@ class jsonCollection {
   }
 
   /**
-   * @param {collections} [Map or instance of Map or jsonCollection]
+   * @param {...Object} collections
    * @description Combines two or more collections and generates a new collection. Doesn't affects the any of the collection
-   * @returns Collection
+   * @returns {jsonCollection} - The concated Collection
+   * @example
+   * jsonCollection.concat(jsonCollection3)
    */
   concat(...collections) {
     let newColl = this.clone();
@@ -630,9 +725,17 @@ class jsonCollection {
   }
 
   /**
-   * @param {data: Object in the form {key: value}| Array of entries in the form [[key, value], [key, value]]|Instance of Map|Instance of jsonCollection} - The data to add to the new collection
-   * @description Creates a new collection
-   * @returns Collection
+   * @param {(Object|jsonCollection|mapCollection|Array)} data - The data to add to the collection while creating a new collection
+   * @description Creates a new collection with the provided data
+   * @returns {jsonCollection} - The new collection
+   * @example
+   * jsonCollection.create({"hii": "hello", "ok": "bye"})
+   * @example
+   * jsonCollection.create([["hii", "hello"], ["ok", "bye"]])
+   * @example
+   * jsonCollection.create(jsonCollection2)
+   * @example
+   * jsonCollection.create(mapCollection)
    */
   create(data) {
     let coll = new this.constructor(data);
@@ -641,7 +744,9 @@ class jsonCollection {
 
   /**
    * @description Clones the collection and generates a new clone of the current collection
-   * @returns Collection
+   * @returns {jsonCollection} - The Cloned Collection
+   * @example
+   * jsonCollection.clone();
    */
   clone() {
     let cloned = this.create(this.json);
@@ -649,9 +754,11 @@ class jsonCollection {
   }
 
   /**
-   * @param {fn: function(Value: v, Key: k, Collection: this)} - The function to sweep the entry. Must return boolean
+   * @param {jsonCollection~3P} - The function to sweep the entry. Must return boolean
    * @description Sweeps out entries according to the function
-   * @returns Number: The number of entries that was sweeped
+   * @returns {number} - The number of entries that was sweeped
+   * @example
+   * jsonCollection.sweep(() => null);
    */
   sweep(fn) {
     if (typeof fn !== "function") return 0;
@@ -664,10 +771,12 @@ class jsonCollection {
   }
 
   /**
-   * @param {path: String} - Path to the json file
-   * @param {overwrite?: boolean} - Whether to overwrite the file with new collection entries. Default: true
+   * @param {string} path - Path to the json file
+   * @param {boolean} overwrite - Whether to overwrite the file with new collection entries. Default: true
    * @description Saves the collection in a json file
-   * @returns Promise<boolean>
+   * @returns {Promise<boolean>}
+   * @example
+   * jsonCollection.save("/home/container/json.json")
    */
   async save(path, overwrite = true) {
     if (typeof path !== "string") throw new TypeError("Path must be a non-empty string.");
@@ -691,10 +800,12 @@ class jsonCollection {
   }
 
   /**
-   * @param {path: String} - Path to the json file
-   * @param {overwrite?: boolean} - Whether to overwrite old entries of the collection with the json data. Default: true
+   * @param {string} path - Path to the json file
+   * @param {boolean} [overwrite=true] - Whether to overwrite old entries of the collection with the json data. 
    * @description Loads the json file to the collection
-   * @returns Promise<Collection>
+   * @returns {Promise<jsonCollection>}
+   * @example
+   * jsonCollection.load("/home/container/json.json")
    */
   async load(path, overwrite = true) {
     if (typeof path !== "string") throw new TypeError("Path must be a non-empty string.");
@@ -724,7 +835,9 @@ class jsonCollection {
 
   /**
    * @description Converts the Collection to an array of keys
-   * @returns Array of keys
+   * @returns {jsonKey[]} - Array of keys
+   * @example
+   * jsonCollection.keys;
    */
   get keys() {
     if (!this.size) return [];
@@ -733,7 +846,9 @@ class jsonCollection {
 
   /**
    * @description Converts the Collection to an array of values
-   * @returns Array of values
+   * @returns {jsonValue[]} - Array of values
+   * @example
+   * jsonCollection.values
    */
   get values() {
     if (!this.size) return [];
@@ -741,8 +856,10 @@ class jsonCollection {
   }
 
   /**
-   * @description Converts the collection into an array of [Key, Value]
-   * @returns Array of [Key, Value]
+   * @description Converts the collection into an array of [jsonKey, jsonValue]
+   * @returns {Array.<jsonKey, jsonValue>} - Array of [Key, jsonValue]
+   * @example
+   * jsonCollection.entries
    */
   get entries() {
     if (!this.size) return [];
@@ -751,7 +868,9 @@ class jsonCollection {
 
   /**
    * @description Gets the total number of entries in the collection
-   * @returns Number
+   * @returns {number}
+   * @example
+   * jsonCollection.count;
    */
   get count() {
     return this.size;
@@ -759,7 +878,9 @@ class jsonCollection {
 
   /**
    * @description Gets the total number of entries in the collection
-   * @returns Number
+   * @returns {number}
+   * @example
+   * jsonCollection.size
    */
   get size() {
     return Object.keys(this.json).length;
@@ -777,4 +898,75 @@ class jsonCollection {
   }
 };
 
+/**
+ * Exporting {jsonCollection} class
+ */
 module.exports = jsonCollection;
+
+  /**
+   * @callback jsonCollection~3P
+   * @param {jsonValue} value - The value
+   * @param {jsonKey} key - The key
+   * @param {jsonCollection} collection - The Collection
+   * @description A callback function with 3 parameters namely value, key, collection
+   * @example
+   * function(value, key, collection) {
+   *   console.log(value, key, collection);
+   * }
+   */
+
+  /**
+   * @callback jsonCollection~2P
+   * @param {jsonValue} value - The value
+   * @param {jsonKey} key - The Key
+   * @description A callback function with 2 parameters namely value, key
+   * @example
+   * function(value, key) {
+   *   console.log(value, key);
+   * }
+   */
+
+  /**
+   * @callback jsonCollection~VP
+   * @param {jsonValue} value - The value
+   * @description A callback function with 1 parameter i.e. value
+   * @example
+   * function(value) {
+   *   console.log(value);
+   * }
+   */
+
+  /**
+   * @callback jsonCollection~KP
+   * @param {jsonKey} key - The key
+   * @description A callback function with 1 parameter i.e. key
+   * @example
+   * function(key) {
+   *   console.log(key);
+   * }
+   */
+
+  /**
+   * @callback jsonCollection~CP
+   * @param {jsonCollection} collection - The collection
+   * @description A callback function with 1 parameter i.e. collection
+   * @example
+   * function(collection) {
+   *   console.log(collection.toJSON());
+   * }
+   */
+
+  /**
+   * The key for {@link jsonCollection} class
+   * @typedef {(number|Object|string)} jsonKey
+   */
+
+  /**
+   * The value for {@link jsonCollection} class.
+   * @typedef {Any} jsonValue
+   */
+
+  /**
+   * Any data type
+   * @typedef {*} Any - Any type of data is accepted
+   */
