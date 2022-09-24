@@ -90,7 +90,7 @@ class mapCollection extends Map {
    */
   findKey(fn) {
     if (typeof fn !== "function") throw new TypeError(`${fn} is not a function.`);
-    return filterKeys(fn)[0];
+    return this.filterKeys(fn)[0];
   }
 
   /**
@@ -475,7 +475,7 @@ class mapCollection extends Map {
    */
   first(index) {
     let keys = this.firstKey(index);
-    if (!key) return null;
+    if (!keys) return null;
     if (!Array.isArray(keys)) {
       return this.get(keys);
     } else {
@@ -579,7 +579,7 @@ class mapCollection extends Map {
     let keys = this.lastKey(index);
     if (!keys) return null;
     if (!Array.isArray(keys)) {
-      this.delete(key);
+      this.delete(keys);
     } else {
       for (let k of keys) {
         this.delete(k);
