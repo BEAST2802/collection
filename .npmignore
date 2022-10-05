@@ -1,0 +1,6 @@
+# Ignoring documentation folder
+node_modules
+docs
+definition.js
+.jsdoc.json
+.github
