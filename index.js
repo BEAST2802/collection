@@ -12,6 +12,6 @@
  * @license Apache-2
  */
 module.exports = {
-  json: require("./jsonCollection.js"),
-  map: require("./mapCollection.js")
+  json: require("./src/jsonCollection.js"),
+  map: require("./src/mapCollection.js")
 }
