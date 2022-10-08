@@ -87,7 +87,7 @@ class jsonCollection {
    */
   find(fn) {
     if (typeof fn !== "function") throw new TypeError(`${fn} is not a function.`);
-    if (this.size) return null;
+    if (!this.size) return null;
     for (let [k, v] of this) {
       if (fn(v, k, this)) return v;
     }
@@ -102,7 +102,7 @@ class jsonCollection {
    */
   findKey(fn) {
     if (typeof fn !== "function") throw new TypeError(`${fn} is not a function.`);
-    if (this.size) return null;
+    if (!this.size) return null;
     for (let [k, v] of this) {
       if (fn(v, k, this)) return k;
     }
@@ -117,7 +117,7 @@ class jsonCollection {
    */
   findEntry(fn) {
     if (typeof fn !== "function") throw new TypeError(`${fn} is not a function.`);
-    if (this.size) return null;
+    if (!this.size) return null;
     for (let [k, v] of this) {
       if (fn(v, k, this)) return [k, v];
     }

@@ -90,7 +90,7 @@ class mapCollection extends Map {
    */
   find(fn) {
     if (typeof fn !== "function") throw new TypeError(`${fn} is not a function.`);
-    if (this.size) return null;
+    if (!this.size) return null;
     for (let [k, v] of this) {
       if (fn(v, k, this)) return v;
     }
@@ -105,7 +105,7 @@ class mapCollection extends Map {
    */
   findKey(fn) {
     if (typeof fn !== "function") throw new TypeError(`${fn} is not a function.`);
-    if (this.size) return null;
+    if (!this.size) return null;
     for (let [k, v] of this) {
       if (fn(v, k, this)) return k;
     }
@@ -120,7 +120,7 @@ class mapCollection extends Map {
    */
   findEntry(fn) {
     if (typeof fn !== "function") throw new TypeError(`${fn} is not a function.`);
-    if (this.size) return null;
+    if (!this.size) return null;
     for (let [k, v] of this) {
       if (fn(v, k, this)) return [k, v];
     }
