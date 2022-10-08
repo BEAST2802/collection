@@ -86,11 +86,14 @@ class mapCollection extends Map {
    * @description Finds the value with the specified function
    * @returns {mapValue} value
    * @example
-   * mapCollection.find(v => v.includes("hii")) //returns Value
+   * mapCollection.find(v => v.includes("hii")) //returns "hii"
    */
   find(fn) {
     if (typeof fn !== "function") throw new TypeError(`${fn} is not a function.`);
-    return this.filter(fn).values[0];
+    if (this.size) return null;
+    for (let [k, v] of this) {
+      if (fn(v, k, this)) return v;
+    }
   }
 
   /**
@@ -102,7 +105,25 @@ class mapCollection extends Map {
    */
   findKey(fn) {
     if (typeof fn !== "function") throw new TypeError(`${fn} is not a function.`);
-    return this.filterKeys(fn)[0];
+    if (this.size) return null;
+    for (let [k, v] of this) {
+      if (fn(v, k, this)) return k;
+    }
+  }
+
+  /**
+   * @param {mapCollection~3P} fn - The function to find the entries. Must return boolean
+   * @description Finds the entry in the collection with the specified function
+   * @returns {Array.<mapKey, mapValue>} Array of key, value
+   * @example
+   * mapCollection.findEntry(v => v.includes("hii")); // returns ["lol", "hii"]
+   */
+  findEntry(fn) {
+    if (typeof fn !== "function") throw new TypeError(`${fn} is not a function.`);
+    if (this.size) return null;
+    for (let [k, v] of this) {
+      if (fn(v, k, this)) return [k, v];
+    }
   }
 
   /**
@@ -121,6 +142,7 @@ class mapCollection extends Map {
     }
     return keys;
   }
+  
   /**
    * @param {mapCollection~3P} fn - The function to filter the entries of the collection. Must return boolean.
    * @description Filters out the collection entries
@@ -136,6 +158,23 @@ class mapCollection extends Map {
       if (fn(v, k, this)) col.set(k, v);
     }
     return col;
+  }
+  
+  /**
+   * @param {mapCollection~3P} fn - The function to filter the entries. Must return boolean
+   * @description Filters the entries in the collection with the specified function
+   * @returns {Array.<mapKey, mapValue>} - Array of multiple [key, value]
+   * @example
+   * mapCollection.filterKeys(v => v.includes("hii")) // returns [["lol", "hii"], ["ok", "hii"]]
+   */
+  filterEntries(fn) {
+    if (typeof fn !== "function") throw new TypeError(`${fn} is not a function.`);
+    let entries = [];
+    if (!this.size) return entries;
+    for (let [k, v] of this) {
+      if (fn(v, k, this)) entries.push([k, v]);
+    }
+    return entries;
   }
 
   /**

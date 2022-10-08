@@ -4,3 +4,4 @@ docs
 definition.js
 .jsdoc.json
 .github
+tests

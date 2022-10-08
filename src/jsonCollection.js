@@ -83,11 +83,14 @@ class jsonCollection {
    * @description Finds the value with the specified function
    * @returns {jsonValue} value
    * @example
-   * jsonCollection.find(v => v.includes("hii")) //returns Value
+   * jsonCollection.find(v => v.includes("hii")) //returns "hii"
    */
   find(fn) {
     if (typeof fn !== "function") throw new TypeError(`${fn} is not a function.`);
-    return this.filter(fn).values[0];
+    if (this.size) return null;
+    for (let [k, v] of this) {
+      if (fn(v, k, this)) return v;
+    }
   }
 
   /**
@@ -99,7 +102,25 @@ class jsonCollection {
    */
   findKey(fn) {
     if (typeof fn !== "function") throw new TypeError(`${fn} is not a function.`);
-    return this.filterKeys(fn)[0];
+    if (this.size) return null;
+    for (let [k, v] of this) {
+      if (fn(v, k, this)) return k;
+    }
+  }
+  
+  /**
+   * @param {jsonCollection~3P} fn - The function to find the entry. Must return boolean
+   * @description Finds the entry in the collection with the specified function
+   * @returns {Array.<jsonKey, jsonValue>} Array of the key, value
+   * @example
+   * jsonCollection.Entry(v => v.includes("hii")) // returns ["lol", "hii"]
+   */
+  findEntry(fn) {
+    if (typeof fn !== "function") throw new TypeError(`${fn} is not a function.`);
+    if (this.size) return null;
+    for (let [k, v] of this) {
+      if (fn(v, k, this)) return [k, v];
+    }
   }
 
   /**
@@ -134,6 +155,23 @@ class jsonCollection {
       if (fn(v, k, this)) col.set(k, v);
     }
     return col;
+  }
+  
+  /**
+   * @param {jsonCollection~3P} fn - The function to filter the entries. Must return boolean
+   * @description Filters the entries in the collection with the specified function
+   * @returns {Array.<jsonKey, jsonValue>} - Array of multiple [key, value]
+   * @example
+   * jsonCollection.filterKeys(v => v.includes("hii")) // returns [["lol", "hii"], ["ok", "hii"]]
+   */
+  filterEntries(fn) {
+    if (typeof fn !== "function") throw new TypeError(`${fn} is not a function.`);
+    let entries = [];
+    if (!this.size) return entries;
+    for (let [k, v] of this) {
+      if (fn(v, k, this)) entries.push([k, v]);
+    }
+    return entries;
   }
 
   /**
