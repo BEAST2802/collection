@@ -881,7 +881,7 @@ class mapCollection extends Map {
    */
   get keys() {
     if (!this.size) return [];
-    return super.keys();
+    return Array.from(super.keys());
   }
 
   /**
@@ -892,7 +892,7 @@ class mapCollection extends Map {
    */
   get values() {
     if (!this.size) return [];
-    return super.values();
+    return Array.from(super.values());
   }
 
   /**
@@ -903,7 +903,7 @@ class mapCollection extends Map {
    */
   get entries() {
     if (!this.size) return [];
-    return super.entries();
+    return Array.from(super.entries());
   }
 
   /**

@@ -1,6 +1,6 @@
 {
   "name": "@beastboyadi/collection",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "description": "A better collection package inspired by @discordjs/collection but faster and with two types, JSON and Map.",
   "main": "index.js",
   "scripts": {
@@ -13,6 +13,7 @@
   "bugs": {
     "url": "https://github.com/BeastBoyADI/collection/issues"
   },
+  "funding": "https://github.com/sponsors/BeastBoyADI",
   "homepage": "https://collection.dbot.cc",
   "keywords": [
     "collection",
