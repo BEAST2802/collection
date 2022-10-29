@@ -142,7 +142,7 @@ class mapCollection extends Map {
     }
     return keys;
   }
-  
+
   /**
    * @param {mapCollection~3P} fn - The function to filter the entries of the collection. Must return boolean.
    * @description Filters out the collection entries
@@ -159,7 +159,7 @@ class mapCollection extends Map {
     }
     return col;
   }
-  
+
   /**
    * @param {mapCollection~3P} fn - The function to filter the entries. Must return boolean
    * @description Filters the entries in the collection with the specified function
@@ -452,7 +452,10 @@ class mapCollection extends Map {
    */
   hasValue(value) {
     if (!this.size) return false;
-    return this.values.includes(value);
+    for (let [k, v] of this) {
+      if (v === value) return true;
+    }
+    return false;
   }
 
   /**
@@ -932,65 +935,65 @@ class mapCollection extends Map {
  */
 module.exports = mapCollection;
 
-  /**
-   * @callback mapCollection~3P
-   * @param {mapValue} value - The value
-   * @param {mapKey} key - The key
-   * @param {mapCollection} collection - The Collection
-   * @description A callback function with 3 parameters namely value, key, collection
-   * @example
-   * function(value, key, collection) {
-   *   console.log(value, key, collection);
-   * }
-   */
+/**
+ * @callback mapCollection~3P
+ * @param {mapValue} value - The value
+ * @param {mapKey} key - The key
+ * @param {mapCollection} collection - The Collection
+ * @description A callback function with 3 parameters namely value, key, collection
+ * @example
+ * function(value, key, collection) {
+ *   console.log(value, key, collection);
+ * }
+ */
 
-  /**
-   * @callback malCollection~2P
-   * @param {mapValue} value - The value
-   * @param {mapKey} key - The Key
-   * @description A callback function with 2 parameters namely value, key
-   * @example
-   * function(value, key) {
-   *   console.log(value, key);
-   * }
-   */
+/**
+ * @callback malCollection~2P
+ * @param {mapValue} value - The value
+ * @param {mapKey} key - The Key
+ * @description A callback function with 2 parameters namely value, key
+ * @example
+ * function(value, key) {
+ *   console.log(value, key);
+ * }
+ */
 
-  /**
-   * @callback mapCollection~VP
-   * @param {mapValue} value - The value
-   * @description A callback function with 1 parameter i.e. value
-   * @example
-   * function(value) {
-   *   console.log(value);
-   * }
-   */
+/**
+ * @callback mapCollection~VP
+ * @param {mapValue} value - The value
+ * @description A callback function with 1 parameter i.e. value
+ * @example
+ * function(value) {
+ *   console.log(value);
+ * }
+ */
 
-  /**
-   * @callback mapCollection~KP
-   * @param {mapKey} key - The key
-   * @description A callback function with 1 parameter i.e. key
-   * @example
-   * function(key) {
-   *   console.log(key);
-   * }
-   */
+/**
+ * @callback mapCollection~KP
+ * @param {mapKey} key - The key
+ * @description A callback function with 1 parameter i.e. key
+ * @example
+ * function(key) {
+ *   console.log(key);
+ * }
+ */
 
-  /**
-   * @callback mapCollection~CP
-   * @param {mapCollection} collection - The collection
-   * @description A callback function with 1 parameter i.e. collection
-   * @example
-   * function(collection) {
-   *   console.log(collection.toJSON());
-   * }
-   */
+/**
+ * @callback mapCollection~CP
+ * @param {mapCollection} collection - The collection
+ * @description A callback function with 1 parameter i.e. collection
+ * @example
+ * function(collection) {
+ *   console.log(collection.toJSON());
+ * }
+ */
 
-  /**
-   * The key for {@link mapCollection} class
-   * @typedef {Any} mapKey
-   */
+/**
+ * The key for {@link mapCollection} class
+ * @typedef {Any} mapKey
+ */
 
-  /**
-   * The value for {@link mapCollection} class.
-   * @typedef {Any} mapValue
-   */
+/**
+ * The value for {@link mapCollection} class.
+ * @typedef {Any} mapValue
+ */

@@ -445,7 +445,10 @@ class jsonCollection {
    */
   hasValue(value) {
     if (!this.size) return false;
-    return this.values.includes(value);
+    for (let [k, v] of this) {
+      if (v === value) return true;
+    }
+    return false;
   }
 
   /**
@@ -462,7 +465,7 @@ class jsonCollection {
     if (typeof k === "undefined") return false;
     if (typeof k === "function") throw new TypeError("Key must not be a function");
     if (typeof k !== "string" && typeof k !== "symbol") k = inspect(k);
-    return this.keys.includes(k);
+    return this.json.hasOwnProperty(k);
   }
 
   /**
